@@ -77,7 +77,15 @@ static void MX_TIM2_Init(void);
 static void MX_TIM10_Init(void);
 static void MX_TIM11_Init(void);
 /* USER CODE BEGIN PFP */
-
+//C to C++ wrappers:
+void mainInit();
+void mainLoop();
+void zeroCrossCallback();
+void timer1Callback();
+void timer2Callback();
+void timer16Callback();
+void timer17Callback();
+void touchgfxSignalVSync();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -108,7 +116,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  __HAL_RCC_DMA1_CLK_ENABLE();	//CubeMX bugfix
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -127,12 +135,17 @@ int main(void)
   MX_TouchGFX_Init();
   /* USER CODE BEGIN 2 */
 
+  HAL_TIM_Base_Start_IT(&htim2);
+  HAL_TIM_Base_Start_IT(&htim11);
+
+  mainInit();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  mainLoop();
     /* USER CODE END WHILE */
 
   MX_TouchGFX_Process();
@@ -671,7 +684,27 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_TIM_PeriodElapsedCallback (TIM_HandleTypeDef * htim) {
+	if(htim->Instance == TIM1) {
+		timer1Callback();
+	}
+	if (htim->Instance == TIM2) {
+		timer2Callback();
+		touchgfxSignalVSync();
+	}
+	if (htim->Instance == TIM10) {
+		timer17Callback();
+	}
+	if (htim->Instance == TIM11) {
+		timer16Callback();
+	}
+}
 
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	if(GPIO_Pin == ZERO_CROSS_DET_Pin) {
+		zeroCrossCallback();
+	}
+}
 /* USER CODE END 4 */
 
 /**
