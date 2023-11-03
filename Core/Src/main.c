@@ -624,7 +624,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, CONTROL_PUMP_Pin|CONTROL_HEATER_Pin|DISPLAY_SPI3_NSS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(DISLAY_RESET_GPIO_Port, DISLAY_RESET_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(DISPLAY_RESET_GPIO_Port, DISPLAY_RESET_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : BUTTON1_Pin BUTTON2_Pin TOUCH_INT_Pin */
   GPIO_InitStruct.Pin = BUTTON1_Pin|BUTTON2_Pin|TOUCH_INT_Pin;
@@ -659,12 +659,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(ZERO_CROSS_DET_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : DISLAY_RESET_Pin */
-  GPIO_InitStruct.Pin = DISLAY_RESET_Pin;
+  /*Configure GPIO pin : DISPLAY_RESET_Pin */
+  GPIO_InitStruct.Pin = DISPLAY_RESET_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(DISLAY_RESET_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(DISPLAY_RESET_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
